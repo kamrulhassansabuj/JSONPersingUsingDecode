@@ -10,27 +10,35 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    struct Course: Decodable {
-        let id : Int
+    struct WebsiteDescription: Decodable {
         let name : String
-        let link : String
-        let imageURL : String
-        
-        
-        init(json: [String: Any]) {
-            id = json["id"] as? Int ?? 0
-            name = json["name"] as? String ?? ""
-            link = json["link"] as? String ?? ""
-            imageURL = json["imageURL"] as? String ?? ""
-        }
+        let description : String
+        let courses : [Course]
     }
+        struct Course: Decodable {
+            let id : Int?
+            let name : String?
+            let link : String?
+            let imageUrl : String?
+            let number_of_lessons : Int?
+        }
+    
+        
+        
+//        init(json: [String: Any]) {
+//            id = json["id"] as? Int ?? 0
+//            name = json["name"] as? String ?? ""
+//            link = json["link"] as? String ?? ""
+//            imageURL = json["imageURL"] as? String ?? ""
+//        }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         
-        let jsonURLString = "https://api.letsbuildthatapp.com/jsondecodable/course"
+        let jsonURLString = "https://api.letsbuildthatapp.com/jsondecodable/courses_missing_fields"
         
         guard let url = URL(string: jsonURLString) else {
             return
@@ -45,8 +53,13 @@ class ViewController: UIViewController {
 //            print(dataAsString )
             do {
                 //Swift 4 or later
-                let course = try JSONDecoder().decode(Course.self, from: data)
-                print(course.name)
+//                let websiteDescription = try JSONDecoder().decode(WebsiteDescription.self, from: data)
+//                print(websiteDescription.name, websiteDescription.description, websiteDescription.courses)
+                let courses = try JSONDecoder().decode([Course].self, from: data)
+                print("Hello")
+                print("\(courses) \n")
+                
+                
                 //Swift 2/3
 //                guard let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:Any] else {return}
 //
